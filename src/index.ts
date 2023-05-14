@@ -6,7 +6,7 @@ const products = [{title: 'tomato'}, {title: 'orange'}]
 const addresses = [{id: 1, value: 'brest' }, {id: 2, value: 'minsk' }]
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Test')
+    res.send('Test ')
 })
 
 app.get('/products', (req: Request, res: Response) => {
