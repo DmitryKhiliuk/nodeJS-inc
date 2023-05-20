@@ -2,7 +2,7 @@ import express, {Request, Response} from 'express'
 const app = express()
 const port = process.env.PORT || 3000
 
-const products = [{title: 'tomato'}, {title: 'orange'}]
+const products = [{id: 1, title: 'tomato'}, {id: 2, title: 'orange'}]
 const addresses = [{id: 1, value: 'brest' }, {id: 2, value: 'minsk' }]
 
 app.get('/', (req: Request, res: Response) => {
@@ -10,6 +10,12 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.get('/products', (req: Request, res: Response) => {
+    if (req.query.title) {
+        let searchString = req.query.title.toString()
+        res.send(products.filter(p => p.title.indexOf(searchString) > -1))
+    } else {
+        res.send(products)
+    }
     res.send(products)
 })
 
