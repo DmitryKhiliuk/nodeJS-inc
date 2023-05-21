@@ -2,6 +2,7 @@ import express, {Request, Response} from 'express'
 import bodyParser from "body-parser";
 import {productsRouter} from "./routes/products-router";
 import {addressesRouter} from "./routes/addressess-router";
+import {messagesRouter} from "./routes/messages-router";
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -17,6 +18,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/products', productsRouter)
 app.use('/address', addressesRouter)
+app.use('/messages', messagesRouter)
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

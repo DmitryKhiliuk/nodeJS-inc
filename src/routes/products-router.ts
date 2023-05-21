@@ -17,6 +17,14 @@ productsRouter.get('/:id', (req: Request, res: Response) => {
         res.send(404)
     }
 })
+productsRouter.get('/:title', (req: Request, res: Response) => {
+    let product = productsRepository.findProductByTitle(req.params.title);
+    if (product) {
+        res.send(product)
+    } else {
+        res.send(404)
+    }
+})
 productsRouter.delete('/:id', (req: Request, res: Response) => {
     const isDeleted = productsRepository.deleteProduct(+req.params.id)
     if (isDeleted) {
@@ -31,14 +39,6 @@ productsRouter.post('/', (req: Request, res: Response) => {
 })
 productsRouter.put('/:id', (req: Request, res: Response) => {
     let product = productsRepository.updateProduct(+req.params.id, req.body.title)
-    if (product) {
-        res.send(product)
-    } else {
-        res.send(404)
-    }
-})
-productsRouter.get('/:title', (req: Request, res: Response) => {
-    let product = productsRepository.findProductByTitle(req.params.title);
     if (product) {
         res.send(product)
     } else {
