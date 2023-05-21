@@ -1,8 +1,11 @@
-import {Request, Response, Router} from "express";
+import {NextFunction, Request, Response, Router} from "express";
 import {productsRepository} from "../repositories/products-repository";
+import {body, validationResult} from "express-validator";
+import {validationMiddleware} from "../middlewares/validation";
 
 export const productsRouter = Router({})
 
+const titleValidation = body('title').trim().isLength({min: 3, max: 10})
 
 
 productsRouter.get('/', (req: Request, res: Response) => {
@@ -33,9 +36,11 @@ productsRouter.delete('/:id', (req: Request, res: Response) => {
         res.send(404)
     }
 })
-productsRouter.post('/', (req: Request, res: Response) => {
+productsRouter.post('/',titleValidation,  validationMiddleware, (req: Request, res: Response) => {
     const newProduct = productsRepository.createProduct(req.body)
-    res.status(201).send(newProduct)
+    res.status(201).send(newProduct);
+
+
 })
 productsRouter.put('/:id', (req: Request, res: Response) => {
     let product = productsRepository.updateProduct(+req.params.id, req.body.title)
